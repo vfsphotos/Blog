@@ -1,8 +1,13 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
+from .models import Publication
+
+from .forms import PublicationForm
 
 
 def index(request):
-    return render(request, 'index.html')
+    publications = Publication.objects.all()
+
+    return render(request, 'index.html', {'publications': publications})
 
 
 def about(request):
@@ -15,3 +20,14 @@ def contact(request):
 
 def post(request):
     return render(request, 'post.html')
+
+
+def adicionar_publication(request):
+    if request.method == 'POST':
+        forms = PublicationForm(request.POST)
+        if forms.is_valid():
+            forms.save()
+            return redirect('index')
+    else:
+        forms = PublicationForm()
+    return render(request, 'publication/adicionar_publication.html', {'forms': forms})
