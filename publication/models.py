@@ -4,7 +4,7 @@ from author.models import Author
 
 
 class Publication(models.Model):
-    author = models.ForeignKey(
+    autor = models.ForeignKey(
         Author,
         on_delete=models.CASCADE
     )
@@ -13,13 +13,16 @@ class Publication(models.Model):
         auto_now_add=True
     )
     pub_title = models.CharField(
-        'publication title',
+        'Título da publicação',
         max_length=100
     )
     pub_text = models.TextField(
-        'publications',
+        'Texto da publicação',
         max_length=255
     )
 
     class Meta:
-        db_table = 'pubblications'
+        db_table = 'publications'
+
+    def __str__(self):
+        return self.name
